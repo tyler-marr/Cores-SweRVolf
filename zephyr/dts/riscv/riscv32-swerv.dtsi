@@ -55,5 +55,13 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 		};
+		gpio0: gpio@80001010 {
+			compatible = "swervolf,gpio";
+			reg = <0x80001010 0x4>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			label = "GPIO0";
+		};
+
 	};
 };

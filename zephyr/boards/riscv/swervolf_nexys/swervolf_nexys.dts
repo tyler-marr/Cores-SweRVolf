@@ -8,6 +8,7 @@
 	model = "ChipsAlliance Swervolf-Nexys";
 	compatible = "ChipsAlliance,Swervolf-Nexys";
 	aliases {
+		led0 = &led_0;
 	};
 
 	chosen {
@@ -20,9 +21,79 @@
 		compatible = "mmio-sram";
 		reg = <0x00000000 0x00800000>;
 	};
+	leds {
+		compatible = "gpio-leds";
+		led_0: led_0 {
+			gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>;
+			label = "LED 0";
+		};
+		led_1: led_1 {
+			gpios = <&gpio0 1 GPIO_ACTIVE_HIGH>;
+			label = "LED 1";
+		};
+		led_2: led_2 {
+			gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+			label = "LED 2";
+		};
+		led_3: led_3 {
+			gpios = <&gpio0 3 GPIO_ACTIVE_HIGH>;
+			label = "LED 3";
+		};
+		led_4: led_4 {
+			gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+			label = "LED 4";
+		};
+		led_5: led_5 {
+			gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+			label = "LED 5";
+		};
+		led_6: led_6 {
+			gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
+			label = "LED 6";
+		};
+		led_7: led_7 {
+			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
+			label = "LED 7";
+		};
+		led_8: led_8 {
+			gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>;
+			label = "LED 8";
+		};
+		led_9: led_9 {
+			gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
+			label = "LED 9";
+		};
+		led_10: led_10 {
+			gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
+			label = "LED 10";
+		};
+		led_11: led_11 {
+			gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>;
+			label = "LED 11";
+		};
+		led_12: led_12 {
+			gpios = <&gpio0 12 GPIO_ACTIVE_HIGH>;
+			label = "LED 12";
+		};
+		led_13: led_13 {
+			gpios = <&gpio0 13 GPIO_ACTIVE_HIGH>;
+			label = "LED 13";
+		};
+		led_14: led_14 {
+			gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>;
+			label = "LED 14";
+		};
+		led_15: led_15 {
+			gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>;
+			label = "LED 15";
+		};
+	};
+
 };
 
-
+&gpio0 {
+	status = "okay";
+};
 &uart0 {
 	status = "okay";
 	current-speed = <115200>;
