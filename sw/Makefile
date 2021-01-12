@@ -7,7 +7,7 @@ bootloader.elf: boot_main.S spi_uimage_loader.S hexloader.S
 %.elf: %.S
 	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -march=rv32im -mabi=ilp32 -Tlink.ld -o$@ $<
 %.elf: %.c
-	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -nostdlib -march=rv32im -mabi=ilp32 -Tlink.ld -o$@ $<
+	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -nostdlib -march=rv32imc -mabi=ilp32 -Tlink.ld -o$@ $<
 %.dis: %.elf %.vh
 	$(TOOLCHAIN_PREFIX)objdump -S $< > $@
 %.vh: %.bin
