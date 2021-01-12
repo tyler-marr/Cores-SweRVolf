@@ -24,7 +24,8 @@
 `default_nettype none
 module swervolf_core
   #(parameter bootrom_file  = "",
-    parameter clk_freq_hz = 0)
+    parameter clk_freq_hz = 0,
+    parameter MAX_CYCLES = 0)
    (input wire 	clk,
     input wire 	       rstn,
     input wire 	       dmi_reg_en,
@@ -210,6 +211,21 @@ module swervolf_core
    assign wb_s2m_rom_err = 1'b0;
    assign wb_s2m_rom_rty = 1'b0;
 
+  wb_ntp ntp_mod(
+      .i_clk    (wb_clk),
+      .i_rst    (wb_rst),
+      .i_wb_adr (wb_m2s_ntp_adr[5:0]),
+      .i_wb_dat (wb_m2s_ntp_dat),
+      .i_wb_sel (wb_m2s_ntp_sel),
+      .i_wb_we  (wb_m2s_ntp_we),
+      .i_wb_cyc (wb_m2s_ntp_cyc),
+      .i_wb_stb (wb_m2s_ntp_stb),
+      .o_wb_rdt (wb_s2m_ntp_dat),
+      .o_wb_ack (wb_s2m_ntp_ack));
+
+   assign wb_s2m_ntp_err = 1'b0;
+   assign wb_s2m_ntp_rty = 1'b0;
+
    swervolf_syscon
      #(.clk_freq_hz (clk_freq_hz))
    syscon
@@ -337,7 +353,9 @@ module swervolf_core
       .ri_pad_i  (1'b0),
       .dcd_pad_i (1'b0));
 
-   swerv_wrapper_dmi rvtop
+   swerv_wrapper_dmi 
+      #(.MAX_CYCLES(MAX_CYCLES))
+      rvtop
      (
       .clk     (clk),
       .rst_l   (rstn),

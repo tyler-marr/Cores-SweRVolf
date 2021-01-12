@@ -23,7 +23,8 @@
 
 `default_nettype none
 module swervolf_core_tb
-  #(parameter bootrom_file  = "")
+  #(parameter bootrom_file  = "",
+  parameter MAX_CYCLES = 0)
 `ifdef VERILATOR
   (input wire clk,
    input wire  rst,
@@ -198,7 +199,8 @@ module swervolf_core_tb
 
    swervolf_core
      #(.bootrom_file (bootrom_file),
-       .clk_freq_hz (32'd50_000_000))
+       .clk_freq_hz (32'd50_000_000),
+       .MAX_CYCLES(MAX_CYCLES))
    swervolf
      (.clk  (clk),
       .rstn (!rst),

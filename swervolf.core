@@ -43,6 +43,12 @@ filesets:
       - sw/hello.ubvh : {file_type : user, copyto : hello.ubvh}
     file_type : verilogSource
 
+  ntp_rtl:
+    files:
+      - rtl/wb_ntp.v
+    file_type : verilogSource
+
+
   nexys_a7_files:
     files :
       - data/vivado_waiver.tcl : {file_type : tclSource}
@@ -63,12 +69,13 @@ targets:
       - core
       - "!tool_verilator? (bfm)"
       - tb
+      - ntp_rtl
       - bootrom
       - "tool_verilator? (verilator_tb)"
       - "tool_verilator? (verilator_waiver)"
 
     generate : [intercon, swerv_default_config, version, wb_intercon]
-    parameters : [SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
+    parameters : [MAX_CYCLES=0, SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
     tools:
       rivierapro:
         vlog_options :
@@ -84,7 +91,7 @@ targets:
           - -svinputport=compat
           - -suppress 2583
       verilator:
-        verilator_options : [--trace, -Wno-fatal]
+        verilator_options : [--trace, -Wno-fatal, --threads 2]
     toplevel : swervolf_core_tb
 
   spi_tb:
@@ -129,7 +136,7 @@ generate:
     parameters:
       masters:
         io:
-          slaves : [rom, sys, spi_flash, uart]
+          slaves : [rom, sys, spi_flash, uart, ntp]
       slaves:
         rom:
           offset : 0x00000000
@@ -142,6 +149,9 @@ generate:
           size   : 0x00000040
         uart:
           offset : 0x00002000
+          size   : 0x00001000
+        ntp:
+          offset : 0x00003000
           size   : 0x00001000
   intercon:
     generator: axi_intercon_gen
@@ -172,6 +182,11 @@ generate:
     generator: gitversion
 
 parameters:
+  MAX_CYCLES:
+    datatype    : int
+    description : max number of cpu cycles before $finish is called
+    paramtype   : vlogparam
+
   SIMPRINT:
     datatype    : bool
     description : Enable simulation character output

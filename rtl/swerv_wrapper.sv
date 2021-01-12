@@ -25,6 +25,7 @@
 //`include "def.sv"
 module swerv_wrapper_dmi
    import swerv_types::*;
+   #(parameter MAX_CYCLES = 0)
 (
    input logic                       clk,
    input logic                       rst_l,
@@ -343,6 +344,50 @@ module swerv_wrapper_dmi
         .rst_l(core_rst_l),
         .*
         );
+
+   integer el;
+   int commit_count;
+
+   logic                       wb_valid[1:0];
+   logic [4:0]                 wb_dest[1:0];
+   logic [31:0]                wb_data[1:0];
+   bit   [31:0]                cycleCnt;
+
+   // trace monitor
+   always @(posedge clk) begin
+      cycleCnt <= cycleCnt + 1;
+      if(MAX_CYCLES!=0 && cycleCnt == MAX_CYCLES) begin
+         $display ("Hit max cycle count (%0d)... stopping",cycleCnt);
+         $finish;
+      end
+   end
+
+   always @(posedge clk) begin
+      wb_valid[1:0]  <= '{rvtop.swerv.dec.dec_i1_wen_wb, rvtop.swerv.dec.dec_i0_wen_wb};
+      wb_dest[1:0]   <= '{rvtop.swerv.dec.dec_i1_waddr_wb, rvtop.swerv.dec.dec_i0_waddr_wb};
+      wb_data[1:0]   <= '{rvtop.swerv.dec.dec_i1_wdata_wb, rvtop.swerv.dec.dec_i0_wdata_wb};
+      if (trace_rv_i_valid_ip !== 0) begin
+         // $fwrite(tp,"%b,%h,%h,%0h,%0h,3,%b,%h,%h,%b\n", trace_rv_i_valid_ip, trace_rv_i_address_ip[63:32], trace_rv_i_address_ip[31:0],
+         //       trace_rv_i_insn_ip[63:32], trace_rv_i_insn_ip[31:0],trace_rv_i_exception_ip,trace_rv_i_ecause_ip,
+         //       trace_rv_i_tval_ip,trace_rv_i_interrupt_ip);
+         // Basic trace - no exception register updates
+         // #1 0 ee000000 b0201073 c 0b02       00000000
+         for (int i=0; i<2; i++)
+            if (trace_rv_i_valid_ip[i]==1) begin
+                  commit_count++;
+                  $fwrite (el, "%10d : %6s 0 %h %h %s\n", cycleCnt, $sformatf("#%0d",commit_count),
+                        trace_rv_i_address_ip[31+i*32 -:32], trace_rv_i_insn_ip[31+i*32-:32],
+                        (wb_dest[i] !=0 && wb_valid[i]) ?  $sformatf("r%0d=%h", wb_dest[i], wb_data[i]) : "");
+            end
+      end
+   end
+
+   initial begin 
+      el = $fopen("exec.log","w");
+      $fwrite (el, "//Cycle : #inst 0  pc opcode reg regnum value\n");
+      commit_count = 0;
+      cycleCnt = 0;
+   end
 
 
 endmodule
