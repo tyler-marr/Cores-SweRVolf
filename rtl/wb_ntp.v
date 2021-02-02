@@ -53,23 +53,14 @@ module wb_ntp (
 			o_wb_ack <= 1'b0;
 
 		if (mem_we != 0 && !o_wb_ack) begin
-			$write("Write enable: addr:%x, sel:%x, data:%x\n",  i_wb_adr[5:2], i_wb_sel, i_wb_dat);
+			$write("Write enable: addr:%x, sel:%x, data:%x\n",  
+				i_wb_adr[5:2], 
+				i_wb_sel, 
+				{{8{i_wb_sel[3]}},{8{i_wb_sel[2]}},{8{i_wb_sel[1]}},{8{i_wb_sel[0]}}}
+				&i_wb_dat);
 			$fflush;
 		end
 	end
-
 	
-
-	//  dpram64
-	//    #(.SIZE (MEM_SIZE),
-	//      .mem_clear (mem_clear),
-	//      .memfile (INIT_FILE))
-	//  ram
-	//    (.clk   (i_clk),
-	//     .we    (mem_we),
-	//     .din   (mem_wdata),
-	//     .waddr ({i_wb_adr[$clog2(MEM_SIZE)-1:3],3'b000}),
-	//     .raddr ({i_wb_adr[$clog2(MEM_SIZE)-1:3],3'b000}),
-	//     .dout  (mem_rdata));
 
 endmodule

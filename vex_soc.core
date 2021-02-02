@@ -1,8 +1,22 @@
 CAPI=2:
 
-name : ::swervolf:0.7.2
+name : ::vex_soc:0.0.1
 
 filesets:
+  vex_core:
+    files:
+      - rtl/dpram64.v
+      - rtl/wb_mem_wrapper.v
+      - rtl/swervolf_syscon.v
+      - rtl/swerv_wrapper.sv
+      - rtl/swervolf_core.v
+      - rtl/VexRiscv.v
+    file_type : systemVerilogSource
+    depend :
+      - fusesoc:utils:generators
+      - wb_intercon
+      - ">=chipsalliance.org:cores:SweRV_EH1:1.5"
+
   core:
     files:
       - rtl/dpram64.v
@@ -16,7 +30,6 @@ filesets:
       - fusesoc:utils:generators
       - uart16550
       - ">=pulp-platform.org::axi:0.23.0-r1"
-      - ">=chipsalliance.org:cores:SweRV_EH1:1.5"
       - simple_spi
       - wb_intercon
 
@@ -48,6 +61,15 @@ filesets:
       - rtl/wb_ntp.v
     file_type : verilogSource
 
+  eth_dpi:
+    files: 
+      - tb/ethernet_dpi.v : {file_type : systemVerilogSource}
+      - tb/ethernet_dpi.cpp : {file_type : cppSource}
+
+  uart_dpi:
+    files: 
+      - tb/uart_dpi.v : {file_type : systemVerilogSource}
+      - tb/uart_dpi.cpp : {file_type : cppSource}
 
   nexys_a7_files:
     files :
@@ -63,114 +85,71 @@ filesets:
       - sw/bootloader.vh : {file_type : user, copyto : bootloader.vh}
 
 targets:
-  sim:
+  vex_sim:
     default_tool : verilator
     filesets :
       - core
       - "!tool_verilator? (bfm)"
       - tb
+      - bootrom
+      - "tool_verilator? (verilator_tb)"
+      - "tool_verilator? (verilator_waiver)"
+
+    generate : [swerv_default_config, version, wb_intercon]
+    parameters : [MAX_CYCLES=0, UART_DPI_SIM, SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
+    tools:
+      verilator:
+        verilator_options : [--trace, -Wno-fatal, --threads 1]
+    toplevel : swervolf_core_tb
+
+
+  sim:
+    default_tool : verilator
+    filesets :
+      - vex_core
+      - "!tool_verilator? (bfm)"
+      - tb
+      - eth_dpi
+      - uart_dpi
       - ntp_rtl
       - bootrom
       - "tool_verilator? (verilator_tb)"
       - "tool_verilator? (verilator_waiver)"
 
-    generate : [intercon, swerv_default_config, version, wb_intercon]
-    parameters : [MAX_CYCLES=0, SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
+    generate : [swerv_default_config, version, wb_intercon]
+    parameters : [MAX_CYCLES=0, UART_DPI_SIM, SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
     tools:
-      rivierapro:
-        vlog_options :
-          - config/common_defines.vh
-          - -timescale 1ns/1ps
-        compilation_mode : common
-      modelsim:
-        vlog_options :
-          - -mfcu
-          - -cuautoname=du
-          - config/common_defines.vh
-          - -timescale 1ns/1ns
-          - -svinputport=compat
-          - -suppress 2583
       verilator:
-        verilator_options : [--trace, -Wno-fatal, --threads 2]
+        verilator_options : [--trace, -Wno-fatal, --threads 1]
     toplevel : swervolf_core_tb
-
-  spi_tb:
-    default_tool : modelsim
-    filesets :
-      - bootrom
-      - core
-      - bfm
-      - spi_tb
-
-    generate : [intercon, swerv_default_config, wb_intercon]
-    parameters : [SIMPRINT=true, ram_init_file, rom_init_file, flash_init_file, mem_clear=true, timeout, vcd]
-    tools:
-      rivierapro:
-        vlog_options :
-          - config/common_defines.vh
-          - -timescale 1ns/1ps
-        compilation_mode : common
-      modelsim:
-        vlog_options :
-          - -mfcu
-          - -cuautoname=du
-          - config/common_defines.vh
-          - -timescale 1ns/1ns
-    toplevel : swervolf_spi_tb
-
-  nexys_a7:
-    default_tool : vivado
-    filesets :
-      - bootrom
-      - core
-      - nexys_a7_files
-    generate : [intercon, swerv_default_config, version, wb_intercon]
-    parameters : [bootrom_file]
-    tools:
-      vivado: {part : xc7a100tcsg324-1}
-    toplevel : swervolf_nexys_a7
 
 generate:
   wb_intercon:
     generator: wb_intercon_gen
     parameters:
       masters:
-        io:
-          slaves : [rom, sys, spi_flash, uart, ntp]
+        wbi:
+          slaves : [ram, rom]
+        wbd:
+          slaves : [ram, rom, sys, uart, ntp]
       slaves:
         rom:
           offset : 0x00000000
           size   : 0x00001000
-        sys:
-          offset : 0x00001000
-          size   : 0x00000040
-        spi_flash:
-          offset : 0x00001040
-          size   : 0x00000040
         uart:
-          offset : 0x00002000
+          offset : 0x00001000
           size   : 0x00001000
         ntp:
-          offset : 0x00003000
+          offset : 0x00002000
           size   : 0x00001000
-  intercon:
-    generator: axi_intercon_gen
-    parameters:
-      masters:
-        ifu:
-          id_width : 3
-          read_only : true
-        lsu:
-          id_width : 4
-        sb:
-          id_width : 1
-      slaves:
-        io:
-          offset : 0x80000000
-          size   : 0x00004000
+        sys:
+          offset : 0x00003000
+          size   : 0x00000040
         ram:
-          offset : 0x00000000
-          size   : 0x08000000 #128MiB
+          offset : 0x80000000
+          size   : 0x7FFFFFFF
+
+  
 
   swerv_default_config:
     generator: swerv_config
@@ -186,6 +165,11 @@ parameters:
     datatype    : int
     description : max number of cpu cycles before $finish is called
     paramtype   : vlogparam
+
+  UART_DPI_SIM:
+    datatype    : bool
+    description : Enable DPI UART module
+    paramtype   : vlogdefine
 
   SIMPRINT:
     datatype    : bool

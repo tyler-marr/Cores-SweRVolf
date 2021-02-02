@@ -1,0 +1,286 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Fri Jan 29 01:35:22 2021
+[*]
+[dumpfile] "/scratch/wfhome/wand/swervolf/build/vex_soc_0.0.1/sim-verilator/trace.vcd"
+[dumpfile_mtime] "Fri Jan 29 01:18:38 2021"
+[dumpfile_size] 37979301
+[savefile] "/scratch/wfhome/wand/swervolf/fusesoc_libraries/vex_soc/traceconf.gtkw"
+[timestart] 2827
+[size] 1615 1026
+[pos] -1 -1
+*-8.272255 1500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.swervolf_core_tb.
+[treeopen] TOP.swervolf_core_tb.vex.
+[treeopen] TOP.swervolf_core_tb.vex.wb_intercon0.
+[treeopen] TOP.swervolf_core_tb.vex.wb_intercon0.wb_mux_wbd.
+[sst_width] 236
+[signals_width] 495
+[sst_expanded] 1
+[sst_vpaned_height] 310
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_clk_i
+@c00024
+#{TOP.swervolf_core_tb.vex.core.execute_PC[13:2]} (18)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (19)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (20)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (21)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (22)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (23)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (24)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (25)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (26)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (27)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (28)TOP.swervolf_core_tb.vex.core.execute_PC[31:0] (29)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+@28
+(18)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(19)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(20)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(21)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(22)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(23)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(24)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(25)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(26)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(27)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(28)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(29)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+@1401204
+-group_end
+@c00022
+TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+@28
+(0)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(1)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(2)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(3)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(4)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(5)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(6)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(7)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(8)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(9)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(10)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(11)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(12)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(13)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(14)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(15)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(16)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(17)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(18)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(19)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(20)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(21)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(22)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(23)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(24)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(25)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(26)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(27)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(28)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(29)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(30)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+(31)TOP.swervolf_core_tb.vex.core.execute_PC[31:0]
+@1401200
+-group_end
+@22
+TOP.swervolf_core_tb.vex.core.execute_INSTRUCTION[31:0]
+@200
+-
+-
+@c00200
+-INSTRUCTION BUS
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_stb_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_cyc_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_ack_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_we_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_adr_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_bte_i[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_cti_i[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_err_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_rty_o
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbi_sel_i[3:0]
+@1401200
+-INSTRUCTION BUS
+@c00200
+-DATA BUS
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_stb_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_cyc_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_ack_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_we_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_adr_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_bte_i[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_cti_i[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_err_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_rty_o
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_wbd_sel_i[3:0]
+@1401200
+-DATA BUS
+@200
+-
+@c00200
+-RAM
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_we_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_cyc_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_stb_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_ack_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_adr_o[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_bte_o[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_cti_o[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_err_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_rty_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ram_sel_o[3:0]
+@1401200
+-RAM
+@c00200
+-NTP
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_ack_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_adr_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_bte_o[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_cti_o[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_cyc_o
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_err_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_rty_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_sel_o[3:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_stb_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_ntp_we_o
+@1401200
+-NTP
+@c00200
+-ROM
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_ack_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_adr_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_bte_o[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_cti_o[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_cyc_o
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_err_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_rty_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_sel_o[3:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_stb_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_rom_we_o
+@1401200
+-ROM
+@c00200
+-SYSCON
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_ack_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_adr_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_bte_o[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_cti_o[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_cyc_o
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_err_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_rty_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_sel_o[3:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_stb_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_sys_we_o
+@1401200
+-SYSCON
+@c00200
+-UART
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_stb_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_cyc_o
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_ack_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_we_o
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_adr_o[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_dat_i[31:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_dat_o[31:0]
+@28
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_bte_o[1:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_cti_o[2:0]
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_err_i
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_rty_i
+@22
+TOP.swervolf_core_tb.vex.wb_intercon0.wb_uart_sel_o[3:0]
+@1401200
+-UART
+@200
+-
+-
+-
+-
+@c00200
+-registers
+@22
++{zero} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(0)[31:0]
++{RA/x1} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(1)[31:0]
++{SP/x2} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(2)[31:0]
++{GP/x3} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(3)[31:0]
++{TP/x4} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(4)[31:0]
++{t0/x5} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(5)[31:0]
++{t1/x6} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(6)[31:0]
++{t2/x7} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(7)[31:0]
++{FP/s0/x8} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(8)[31:0]
++{s1/x9} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(9)[31:0]
++{a0/x10} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(10)[31:0]
++{a1/x11} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(11)[31:0]
++{a2/x12} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(12)[31:0]
++{a3/x13} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(13)[31:0]
++{a4/x14} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(14)[31:0]
++{a5/x15} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(15)[31:0]
++{a6/x16} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(16)[31:0]
++{a7/x17} TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(17)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(18)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(19)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(20)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(21)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(22)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(23)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(24)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(25)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(26)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(27)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(28)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(29)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(30)[31:0]
+TOP.swervolf_core_tb.vex.core.RegFilePlugin_regFile(31)[31:0]
+@1401200
+-registers
+@200
+-
+-
+-
+-
+-
+-
+-
+-
+[pattern_trace] 1
+[pattern_trace] 0
