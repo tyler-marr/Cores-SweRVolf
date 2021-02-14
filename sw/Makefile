@@ -15,7 +15,7 @@ ethernet.elf: start.o ethernet_example.o uart_support.o
 %.o: %.S
 	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -nostdlib -march=$(MARCH) -mabi=$(MABI) -Tlink.ld -c -o$@ $<
 %.o: %.c
-	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -nostdlib -march=$(MARCH) -mabi=$(MABI) -Tlink.ld -c -o$@ $<
+	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -nostdlib -march=$(MARCH) -mabi=$(MABI) -Tlink.ld -c -g -o$@ $<
 %.dis: %.elf %.vh
 	$(TOOLCHAIN_PREFIX)objdump -D $< > $@
 %.vh: %.bin

@@ -33,6 +33,8 @@ module swervolf_core_tb
    input wire  i_jtag_tdi,
    input wire  i_jtag_trst_n,
    output wire o_jtag_tdo,
+   output wire o_debug_resetOut,
+
    output wire o_uart_tx,
    output wire o_gpio)
 `endif
@@ -44,25 +46,41 @@ module swervolf_core_tb
    always #10 clk <= !clk;
    initial #100 rst <= 1'b0;
    wire  o_gpio;
-   wire i_jtag_tck = 1'b0;
-   wire i_jtag_tms = 1'b0;
-   wire i_jtag_tdi = 1'b0;
-   wire i_jtag_trst_n = 1'b0;
-   wire o_jtag_tdo;
    wire  o_uart_tx;
 
    uart_decoder #(115200) uart_decoder (o_uart_tx);
 
 `endif
-
+//`define RAMSIZE 32'hBFFFFFFF
+`define RAMSIZE 32'h7FFFFFFF
+`define ram_start_address 32'h80000000
+`define real_to_ram(c) ((c - `ram_start_address)/8)
    reg [1023:0] ram_init_file;
+
 
    initial begin
       if (|$test$plusargs("jtag_vpi_enable"))
           $display("JTAG VPI enabled. Not loading RAM");
       else if ($value$plusargs("ram_init_file=%s", ram_init_file)) begin
           $display("Loading RAM contents from %0s", ram_init_file);
-          $readmemh(ram_init_file, vex.ram.ram.mem);
+          $readmemh(ram_init_file, vex.ram.ram.mem);          
+      end else begin 
+          $readmemh("/scratch/wfhome/wand/swervolf/fusesoc_libraries/vex_soc/sw/emu.vh",
+              vex.ram.ram.mem);
+
+          $readmemh("/scratch/wfhome/wand/swervolf/fusesoc_libraries/vex_soc/sw/linux.vh",
+              vex.ram.ram.mem, `real_to_ram(32'hc0000000));
+          //VMLINUX=$BUILDROOT/output/images/Image
+
+
+          $readmemh("/scratch/wfhome/wand/swervolf/fusesoc_libraries/vex_soc/sw/rootfs.vh",
+              vex.ram.ram.mem, `real_to_ram(32'hc2000000));
+          //RAMDISK=$BUILDROOT/output/images/rootfs.cpio
+
+          $readmemh("/scratch/wfhome/wand/swervolf/fusesoc_libraries/vex_soc/sw/dtb.vh",
+              vex.ram.ram.mem, `real_to_ram(32'hc3000000));
+          //DTB=$BUILDROOT/board/spinal/vexriscv_sim/rv32.dtb 
+
       end
    end
 
@@ -88,46 +106,6 @@ module swervolf_core_tb
    wire [63:0] gpio_out;
    assign o_gpio = gpio_out[0];
 
-  //  wire [5:0]  ram_awid;
-  //  wire [31:0] ram_awaddr;
-  //  wire [7:0]  ram_awlen;
-  //  wire [2:0]  ram_awsize;
-  //  wire [1:0]  ram_awburst;
-  //  wire        ram_awlock;
-  //  wire [3:0]  ram_awcache;
-  //  wire [2:0]  ram_awprot;
-  //  wire [3:0]  ram_awregion;
-  //  wire [3:0]  ram_awqos;
-  //  wire        ram_awvalid;
-  //  wire        ram_awready;
-  //  wire [5:0]  ram_arid;
-  //  wire [31:0] ram_araddr;
-  //  wire [7:0]  ram_arlen;
-  //  wire [2:0]  ram_arsize;
-  //  wire [1:0]  ram_arburst;
-  //  wire        ram_arlock;
-  //  wire [3:0]  ram_arcache;
-  //  wire [2:0]  ram_arprot;
-  //  wire [3:0]  ram_arregion;
-  //  wire [3:0]  ram_arqos;
-  //  wire        ram_arvalid;
-  //  wire        ram_arready;
-  //  wire [63:0] ram_wdata;
-  //  wire [7:0]  ram_wstrb;
-  //  wire        ram_wlast;
-  //  wire        ram_wvalid;
-  //  wire        ram_wready;
-  //  wire [5:0]  ram_bid;
-  //  wire [1:0]  ram_bresp;
-  //  wire        ram_bvalid;
-  //  wire        ram_bready;
-  //  wire [5:0]  ram_rid;
-  //  wire [63:0] ram_rdata;
-  //  wire [1:0]  ram_rresp;
-  //  wire        ram_rlast;
-  //  wire        ram_rvalid;
-  //  wire        ram_rready;
-
    wire        dmi_reg_en;
    wire [6:0]  dmi_reg_addr;
    wire        dmi_reg_wr_en;
@@ -151,6 +129,7 @@ module swervolf_core_tb
 
    vex_core
      #(.bootrom_file (bootrom_file),
+        .RAM_SIZE(`RAMSIZE),
        .clk_freq_hz (32'd50_000_000),
        .MAX_CYCLES(MAX_CYCLES))
    vex
@@ -158,6 +137,35 @@ module swervolf_core_tb
       .rstn (!rst),
 
       .i_gpio              (64'd0),
-      .o_gpio              (gpio_out));
+      .o_gpio              (gpio_out),
+          
+    .o_jtag_tdo(o_jtag_tdo),
+    .i_jtag_tck(i_jtag_tck),
+    .i_jtag_tms(i_jtag_tms),
+    .i_jtag_tdi(i_jtag_tdi),
+    .i_jtag_trst_n(i_jtag_trst_n),
+    .debug_resetOut(o_debug_resetOut)
+
+      );
+
+    // always @(posedge core_clk) begin
+    //     wb_valid[1:0]  <= '{rvtop.swerv.dec.dec_i1_wen_wb, rvtop.swerv.dec.dec_i0_wen_wb};
+    //     wb_dest[1:0]   <= '{rvtop.swerv.dec.dec_i1_waddr_wb, rvtop.swerv.dec.dec_i0_waddr_wb};
+    //     wb_data[1:0]   <= '{rvtop.swerv.dec.dec_i1_wdata_wb, rvtop.swerv.dec.dec_i0_wdata_wb};
+    //     if (trace_rv_i_valid_ip !== 0) begin
+    //        $fwrite(tp,"%b,%h,%h,%0h,%0h,3,%b,%h,%h,%b\n", trace_rv_i_valid_ip, trace_rv_i_address_ip[63:32], trace_rv_i_address_ip[31:0],
+    //               trace_rv_i_insn_ip[63:32], trace_rv_i_insn_ip[31:0],trace_rv_i_exception_ip,trace_rv_i_ecause_ip,
+    //               trace_rv_i_tval_ip,trace_rv_i_interrupt_ip);
+    //        // Basic trace - no exception register updates
+    //        // #1 0 ee000000 b0201073 c 0b02       00000000
+    //        for (int i=0; i<2; i++)
+    //            if (trace_rv_i_valid_ip[i]==1) begin
+    //                commit_count++;
+    //                $fwrite (el, "%10d : %6s 0 %h %h %s\n", cycleCnt, $sformatf("#%0d",commit_count),
+    //                       trace_rv_i_address_ip[31+i*32 -:32], trace_rv_i_insn_ip[31+i*32-:32],
+    //                       (wb_dest[i] !=0 && wb_valid[i]) ?  $sformatf("r%0d=%h", wb_dest[i], wb_data[i]) : "");
+    //            end
+    //     end
+    // end
 
 endmodule

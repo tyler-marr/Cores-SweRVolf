@@ -96,7 +96,7 @@ targets:
       - "tool_verilator? (verilator_waiver)"
 
     generate : [swerv_default_config, version, wb_intercon]
-    parameters : [MAX_CYCLES=0, UART_DPI_SIM, SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
+    parameters : [MAX_CYCLES=0, UART_DPI_SIM, SIMPRINT=true, jtag_vpi_enable, rom_init_file, signature, timeout, vcd]
     tools:
       verilator:
         verilator_options : [--trace, -Wno-fatal, --threads 1]
@@ -117,7 +117,7 @@ targets:
       - "tool_verilator? (verilator_waiver)"
 
     generate : [swerv_default_config, version, wb_intercon]
-    parameters : [MAX_CYCLES=0, UART_DPI_SIM, SIMPRINT=true, jtag_vpi_enable, ram_init_file=hello.vh, rom_init_file, signature, timeout, vcd]
+    parameters : [MAX_CYCLES=0, UART_DPI_SIM, SIMPRINT=true, jtag_vpi_enable, rom_init_file, signature, timeout, vcd]
     tools:
       verilator:
         verilator_options : [--trace, -Wno-fatal, --threads 1]

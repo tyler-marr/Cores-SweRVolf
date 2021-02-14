@@ -47,7 +47,7 @@ double sc_time_stamp () {       // Called by $time in Verilog
 
 void INThandler(int signal)
 {
-	printf("\nCaught ctrl-c\n");
+	printf("\nCaught Ctrl-c\n");
 	done = true;
 }
 

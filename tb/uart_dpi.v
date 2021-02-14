@@ -227,7 +227,7 @@ module uart_dpi
 		   default :
              begin
                 $display( "%sDefault case for wb_sel_i, write cycle.", `UART_DPI_ERROR_PREFIX );
-                $finish;
+                //$finish;
                 get_data_to_write = data[7:0];
              end
 	     endcase;
@@ -248,7 +248,7 @@ module uart_dpi
  		   default:
              begin
                 $display( "%sDefault case for wb_sel_i, read cycle.", `UART_DPI_ERROR_PREFIX );
-                $finish;
+                //$finish;
                 get_data_to_return = 0;
              end
          endcase;
@@ -284,7 +284,7 @@ module uart_dpi
                      if ( 0 != uart_dpi_send( obj, data_to_write ) )
                        begin
                           $display( "%sError sending data.", `UART_DPI_ERROR_PREFIX );
-                          $finish;
+                          //$finish;
                        end;
 
                      // On the real UART, sending a byte clears the THRE interrupt, which will
@@ -315,7 +315,7 @@ module uart_dpi
                      if ( 0 != ( data_to_write & `UART_DPI_IER_MASK_REST ) )
                        begin
                           $display( "%sThe client is setting reserved bits in the UART Interrupt Enable Register (IER).", `UART_DPI_ERROR_PREFIX );
-                          $finish;
+                          //$finish;
                        end;
 
                      // We don't support any modem functionality, so there will never be a modem status interrupt,
@@ -323,7 +323,7 @@ module uart_dpi
                      if ( 0 != ( data_to_write & (1 << `UART_DPI_IER_MS) ) )
                        begin
                           $display( "%sThe client is setting the Modem Status interrupt, which is not supported.", `UART_DPI_ERROR_PREFIX );
-                          $finish;
+                          //$finish;
                        end;
 
                      // The Receiver Line Status interrupt (bit ELSI) has to do with reception errors, but
@@ -369,7 +369,7 @@ module uart_dpi
                      if ( 0 != data_to_write[ `UART_DPI_FCR_RESERVED__BITS ] )
                        begin
                           $display( "%sThe client is setting the reserved bits in the UART FIFO Control Register (FCR), which is probably an error.", `UART_DPI_ERROR_PREFIX );
-                          $finish;
+                          //$finish;
                        end;
                   end
                 else
@@ -380,7 +380,7 @@ module uart_dpi
                      if ( 0 != data_to_write[ `UART_DPI_FCR_BITS_OTHER_THAN_FIFO_ENABLE ] )
                        begin
                           $display( "%sThe client is not writing to the UART FIFO Control Register (FCR) a coherent value, which is probably an error.", `UART_DPI_ERROR_PREFIX );
-                          $finish;
+                          //$finish;
                        end;
                   end;
 
@@ -405,20 +405,20 @@ module uart_dpi
                   begin
                      $display( "%sWriting to the UART Modem Control Register (MCR) is not supported, the value was 0x%02X.",
                                `UART_DPI_ERROR_PREFIX, data_to_write );
-                     $finish;
+                     //$finish;
                   end
              end
 
            UART_DPI_REG_MSR:
              begin
                 $display( "%sWriting to the UART Modem Status Register (MSR) is not supported.", `UART_DPI_ERROR_PREFIX );
-                $finish;
+                //$finish;
              end
 
            UART_DPI_REG_LSR:
              begin
                 $display( "%sThe client is trying to write to the UART Line Status Register (LSR), which is intended for factory testing only and discouraged by the UART documentation.", `UART_DPI_ERROR_PREFIX );
-                $finish;
+                //$finish;
              end
 
            UART_DPI_REG_SCR:
@@ -460,13 +460,13 @@ module uart_dpi
                        // uncomment the $finish below, and modify the code so that the last byte
                        // is remembered and returned at this point.
                        $display( "%sThe client is trying to receive a character, but the FIFO is empty.", `UART_DPI_ERROR_PREFIX );
-                       $finish;
-                       data_to_return = 0;  // Prevents C++ compilation warning under Verilator.
+                       //$finish;
+                       data_to_return = 0; //63 = '?'  // Prevents C++ compilation warning under Verilator.
                     end
                   else if ( 0 != uart_dpi_receive( obj, data_to_return ) )
                     begin
                        $display( "%sError receiving data.", `UART_DPI_ERROR_PREFIX );
-                       $finish;
+                       //$finish;
                     end;
 
                   if ( TRACE_DATA )
@@ -534,7 +534,7 @@ module uart_dpi
            UART_DPI_REG_MCR:
              begin
                 $display( "%sReading the UART Modem Control Register (MCR) is not supported.", `UART_DPI_ERROR_PREFIX );
-                $finish;
+                //$finish;
                 // In case you comment out the error above:
                 data_to_return = 0;
              end
@@ -542,7 +542,7 @@ module uart_dpi
            UART_DPI_REG_MSR:
              begin
                 $display( "%sReading the UART Modem Status Register (MSR) is not supported.", `UART_DPI_ERROR_PREFIX );
-                $finish;
+                //$finish;
                 // In case you comment out the error above:
                 data_to_return = 0;
              end
@@ -614,7 +614,7 @@ module uart_dpi
       if ( 0 != uart_dpi_tick( obj, received_byte_count ) )
         begin
            $display( "%sError calling uart_dpi_tick().", `UART_DPI_ERROR_PREFIX );
-           $finish;
+           //$finish;
         end;
 
       if ( wb_rst_i )
@@ -704,10 +704,10 @@ module uart_dpi
                                     character_timeout_interrupt_pending,
                                     data_to_return );
 
-                     // $display( "%sReading cycle, addr: 0x%08X, value returned: 0x%02X",
-                     //           `UART_DPI_TRACE_PREFIX,
-                     //           wb_adr_i,
-                     //           data_to_return );
+                     $display( "%sReading cycle, addr: 0x%08X, value returned: 0x%02X",
+                               `UART_DPI_TRACE_PREFIX,
+                               wb_adr_i,
+                               data_to_return );
 
                      wb_dat_o <= get_data_to_return( wb_sel_i, data_to_return );
                   end;
@@ -729,7 +729,7 @@ module uart_dpi
                                    obj ) )
           begin
              $display( "%sError creating the object instance.", `UART_DPI_ERROR_PREFIX );
-             $finish;
+             //$finish;
           end;
         //launch terminal running socat on the correct port
         //TODO: use param for port 

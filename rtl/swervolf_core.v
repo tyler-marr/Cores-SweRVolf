@@ -25,12 +25,22 @@
 module vex_core
   #(parameter bootrom_file  = "",
     parameter clk_freq_hz = 0,
-    parameter MAX_CYCLES = 0)
+    parameter MAX_CYCLES = 0,
+    parameter RAM_SIZE = 32'h7FFFFFFF)
    (input wire 	clk,
     input wire 	       rstn,
    
     input wire [63:0]  i_gpio,
-    output wire [63:0] o_gpio);
+    output wire [63:0] o_gpio,
+  
+   input wire  i_jtag_tck,
+   input wire  i_jtag_tms,
+   input wire  i_jtag_tdi,
+   input wire  i_jtag_trst_n,
+   output wire o_jtag_tdo,
+
+  output wire debug_resetOut);
+
 
    localparam BOOTROM_SIZE = 32'h1000;
 
@@ -114,8 +124,9 @@ module vex_core
   wire      [31:0]   externalInterruptArray;
   wire               externalInterrupt;
   wire               externalInterruptS;
+  wire               debugReset;
+  // wire               debug_resetOut;
 
-  localparam RAM_SIZE     = 32'h1000000;
 
 wb_mem_wrapper
      #(.MEM_SIZE  (RAM_SIZE),
@@ -175,7 +186,7 @@ wb_mem_wrapper
     .timerInterrupt(timerInterrupt),
     .softwareInterrupt(softwareInterrupt),
     //.externalInterruptArray(externalInterruptArray),
-    .externalInterrupt(externalInterrupt),
+    .externalInterrupt(uart_irq),
     .externalInterruptS(externalInterruptS),
 
     .iBusWishbone_CYC(              wb_m2s_wbi_cyc),
@@ -200,7 +211,16 @@ wb_mem_wrapper
     .dBusWishbone_SEL(              wb_m2s_wbd_sel),
     .dBusWishbone_ERR(              wb_s2m_wbd_err),
     .dBusWishbone_BTE(              wb_m2s_wbd_bte),
-    .dBusWishbone_CTI(              wb_m2s_wbd_cti)
+    .dBusWishbone_CTI(              wb_m2s_wbd_cti),
+    
+    .jtag_tdo(o_jtag_tdo),
+    .jtag_tck(i_jtag_tck),
+    .jtag_tms(i_jtag_tms),
+    .jtag_tdi(i_jtag_tdi),
+    .debugReset(i_jtag_trst_n),
+    .debug_resetOut(debug_resetOut)
+    
+
 
   );
 
