@@ -9,7 +9,7 @@ filesets:
       - rtl/axi2wb.v
       - rtl/wb_mem_wrapper.v
       - rtl/swervolf_syscon.v
-      - "!cpu_el2? (rtl/swerv_wrapper.sv)"
+#      - "!cpu_el2? (rtl/swerv_wrapper.sv)"
       - "cpu_el2?  (rtl/el2_swerv_wrapper.sv)"
       - rtl/swervolf_core.v
     file_type : systemVerilogSource
@@ -17,7 +17,7 @@ filesets:
       - fusesoc:utils:generators
       - uart16550
       - ">=pulp-platform.org::axi:0.23.0-r1"
-      - "!cpu_el2? (>=chipsalliance.org:cores:SweRV_EH1:1.5)"
+#      - "!cpu_el2? (>=chipsalliance.org:cores:SweRV_EH1:1.5)"
       - "cpu_el2?  (>=chipsalliance.org:cores:SweRV_EL2:1.3)"
       - simple_spi
       - wb_intercon
@@ -54,11 +54,36 @@ filesets:
       - rtl/swervolf_nexys.v    : {file_type : systemVerilogSource}
     depend : [":swervolf:litedram"]
 
+  basys3_files:
+    files :
+      - data/vivado_waiver.tcl : {file_type : tclSource}
+      - data/swervolf_basys3.xdc : {file_type : xdc}
+      - rtl/axi2mem.sv : {file_type : systemVerilogSource}
+      - rtl/axi_mem.v : {file_type : verilogSource}
+      - rtl/el2_swerv_wrapper.sv: {file_type : systemVerilogSource}
+      - rtl/clk_gen_basys3.v : {file_type : verilogSource}
+      - rtl/bscan_tap.sv    : {file_type : systemVerilogSource}
+      - rtl/swervolf_basys3.v    : {file_type : systemVerilogSource}
+    depend: [">=chipsalliance.org:cores:SweRV_EL2:1.3"]
+
+
   bootrom:
     files :
       - sw/bootloader.vh : {file_type : user, copyto : bootloader.vh}
 
 targets:
+  basys3:
+    default_tool : vivado
+    filesets :
+      - bootrom
+      - core
+      - basys3_files
+    generate : [intercon, swerv_el2_nexys_a7_config, version, wb_intercon]
+    parameters : [bootrom_file, cpu_type=EL2]
+    tools:
+      vivado: {part : xc7a35tcpg236-1}
+    toplevel : swervolf_basys3
+
   sim:
     default_tool : verilator
     filesets :
@@ -191,8 +216,6 @@ generate:
         - -set=ret_stack_size=2
         - -set=btb_size=32
         - -set=bht_size=128
-        - -set=dccm_size=16
-        - -set=dccm_num_banks=2
         - -set=iccm_enable=0
         - -set=icache_enable=0
         - -set=dccm_enable=0
