@@ -81,7 +81,10 @@ module swervolf_core
     input wire 	       i_ram_init_done,
     input wire 	       i_ram_init_error,
     input wire [63:0]  i_gpio,
-    output wire [63:0] o_gpio);
+    output wire [63:0] o_gpio,
+    output wire [7:0]  o_anode,
+    output wire [7:0]  o_cathode
+    );
 
    localparam BOOTROM_SIZE = 32'h1000;
 
@@ -234,6 +237,23 @@ module swervolf_core
       .i_wb_stb         (wb_m2s_sys_stb),
       .o_wb_rdt         (wb_s2m_sys_dat),
       .o_wb_ack         (wb_s2m_sys_ack));
+
+   ssd_controller
+     #(.NUM_SEGMENTS(8))
+   ssdcon
+     (.i_clk            (clk),
+      .i_rst            (wb_rst),
+
+      .i_wb_adr         (wb_m2s_ssd_con_adr[5:0]),
+      .i_wb_dat         (wb_m2s_ssd_con_dat),
+      .i_wb_sel         (wb_m2s_ssd_con_sel),
+      .i_wb_we          (wb_m2s_ssd_con_we),
+      .i_wb_cyc         (wb_m2s_ssd_con_cyc),
+      .i_wb_stb         (wb_m2s_ssd_con_stb),
+      .o_wb_rdt         (wb_s2m_ssd_con_dat),
+      .o_wb_ack         (wb_s2m_ssd_con_ack),
+      .o_anode          (o_anode),
+      .o_cathode        (o_cathode));
 
    assign wb_s2m_sys_err = 1'b0;
    assign wb_s2m_sys_rty = 1'b0;

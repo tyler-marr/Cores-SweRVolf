@@ -6,6 +6,16 @@ bootloader.elf: boot_main.S spi_uimage_loader.S hexloader.S
 	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -march=rv32im -mabi=ilp32 -Tlink.ld -o$@ $^
 %.elf: %.S
 	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -march=rv32im -mabi=ilp32 -Tlink.ld -o$@ $<
+# start.o must be linked first such that the first instruction
+# is a valid entry point 
+%.elf: start.o %.o 
+	$(TOOLCHAIN_PREFIX)gcc -DDEBUG -g -nostartfiles -march=rv32im -mabi=ilp32 -Tlink.ld -o$@ $^
+%.o: %.S
+	$(TOOLCHAIN_PREFIX)gcc -DDEBUG -g -nostartfiles -nostdlib -march=rv32imc -mabi=ilp32 -Tlink.ld -c -o$@ $<
+%.o: %.c
+	$(TOOLCHAIN_PREFIX)gcc -DDEBUG -g -nostartfiles -nostdlib -march=rv32imc -mabi=ilp32 -Tlink.ld -c -o$@ $<
+%.dis: %.elf %.vh
+	$(TOOLCHAIN_PREFIX)objdump -S $< > $@
 %.vh: %.bin
 	python3 makehex.py $< > $@
 %.bin: %.elf
@@ -27,4 +37,4 @@ bootloader.elf: boot_main.S spi_uimage_loader.S hexloader.S
 	objcopy --change-addresses $(FLASH_ADDR) -I binary -O verilog $< $@
 
 clean:
-	rm -f *.elf *.bin *.vh
+	rm -f *.elf *.bin *.vh *.o

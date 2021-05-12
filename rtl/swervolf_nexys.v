@@ -47,13 +47,21 @@ module swervolf_nexys_a7
     input wire 	       i_uart_rx,
     output wire        o_uart_tx,
     input wire [15:0]  i_sw,
-    output reg [15:0]  o_led);
+    output reg [15:0]  o_led,
+    output reg [7:0]   o_anode,
+    output reg [7:0]   o_cathode);
 
    wire [63:0] 	       gpio_out;
    reg [15:0] 	       led_int_r;
 
    reg [15:0] 	       sw_r;
    reg [15:0] 	       sw_2r;
+
+   wire [7:0]          anode_out;
+   reg [7:0]           anode_int_r;
+
+   wire [7:0]          cathode_out;
+   reg [7:0]           cathode_int_r;
 
    wire 	       cpu_tx,litedram_tx;
 
@@ -257,13 +265,22 @@ module swervolf_nexys_a7
       .i_ram_init_done  (litedram_init_done),
       .i_ram_init_error (litedram_init_error),
       .i_gpio           ({32'd0,sw_2r,16'd0}),
-      .o_gpio           (gpio_out));
+      .o_gpio           (gpio_out),
+      .o_anode          (anode_out),
+      .o_cathode        (cathode_out));
 
    always @(posedge clk_core) begin
       o_led <= led_int_r;
       led_int_r <= gpio_out[15:0];
       sw_r <= i_sw;
       sw_2r <= sw_r;
+
+      o_anode <= anode_int_r;
+      anode_int_r <= anode_out;
+
+      o_cathode <= cathode_int_r;
+      cathode_int_r <= cathode_out;
+
    end
 
    assign o_uart_tx = sw_2r[0] ? litedram_tx : cpu_tx;
