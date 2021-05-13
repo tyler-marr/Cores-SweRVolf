@@ -9,6 +9,7 @@ filesets:
       - rtl/axi2wb.v
       - rtl/wb_mem_wrapper.v
       - rtl/swervolf_syscon.v
+      - rtl/ssd_controller.v
       - "!cpu_el2? (rtl/swerv_wrapper.sv)"
       - "cpu_el2?  (rtl/el2_swerv_wrapper.sv)"
       - rtl/swervolf_core.v
@@ -52,7 +53,6 @@ filesets:
       - rtl/clk_gen_nexys.v : {file_type : verilogSource}
       - rtl/bscan_tap.sv    : {file_type : systemVerilogSource}
       - rtl/swervolf_nexys.v    : {file_type : systemVerilogSource}
-      - rtl/ssd_controller.v    : {file_type : verilogSource}
     depend : [":swervolf:litedram"]
 
   basys3_files:
