@@ -48,6 +48,7 @@ void main(){
 	while (1) {
 
 		if (!(SWITCHES & (1<<1))){
+			slider = slider << 1;
 			if (slider & 0x8000) {
 				slider &= ~1;
 			} else {
