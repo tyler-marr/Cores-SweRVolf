@@ -33,7 +33,16 @@ module swervolf_basys3
     input wire 	       i_uart_rx,
     output wire        o_uart_tx,
     input wire [15:0]  i_sw,
-    output reg [15:0]  o_led);
+    output reg [15:0]  o_led,
+    output reg [3:0]   o_anode,
+    output reg [7:0]   o_cathode);
+
+
+   wire [3:0]          anode_out;
+   reg [3:0]           anode_int_r;
+
+   wire [7:0]          cathode_out;
+   reg [7:0]           cathode_int_r;
 
    wire [63:0] 	       gpio_out;
    reg [15:0] 	       led_int_r;
@@ -217,13 +226,21 @@ module swervolf_basys3
       .i_ram_init_done     (1'b1),
       .i_ram_init_error    (1'b0),
       .i_gpio              ({32'd0,sw_2r,16'd0}),
-      .o_gpio              (gpio_out));
+      .o_gpio              (gpio_out),
+      .o_anode             (anode_out),
+      .o_cathode           (cathode_out));
 
    always @(posedge clk_core) begin
       o_led <= led_int_r;
       led_int_r <= gpio_out[15:0];
       sw_r <= i_sw;
       sw_2r <= sw_r;
+
+      o_anode <= anode_int_r;
+      anode_int_r <= anode_out;
+      o_cathode <= cathode_int_r;
+
+      cathode_int_r <= cathode_out;
    end
 
 endmodule

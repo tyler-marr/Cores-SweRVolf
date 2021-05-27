@@ -239,7 +239,7 @@ module swervolf_core
       .o_wb_ack         (wb_s2m_sys_ack));
 
    ssd_controller
-     #(.NUM_SEGMENTS(8))
+     #(.clk_freq_hz (clk_freq_hz))
    ssdcon
      (.i_clk            (clk),
       .i_rst            (wb_rst),

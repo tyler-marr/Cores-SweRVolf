@@ -56,5 +56,22 @@ set_property -dict { PACKAGE_PIN N3   IOSTANDARD LVCMOS33 } [get_ports { o_led[1
 set_property -dict { PACKAGE_PIN P1   IOSTANDARD LVCMOS33 } [get_ports { o_led[14] }]
 set_property -dict { PACKAGE_PIN L1   IOSTANDARD LVCMOS33 } [get_ports { o_led[15] }]
 
+set_property -dict { PACKAGE_PIN W7   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[0] }]
+set_property -dict { PACKAGE_PIN W6   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[1] }]
+set_property -dict { PACKAGE_PIN U8   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[2] }]
+set_property -dict { PACKAGE_PIN V8   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[3] }]
+set_property -dict { PACKAGE_PIN U5   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[4] }]
+set_property -dict { PACKAGE_PIN V5   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[5] }]
+set_property -dict { PACKAGE_PIN U7   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[6] }]
+set_property -dict { PACKAGE_PIN V7   IOSTANDARD LVCMOS33 } [get_ports { o_cathode[7] }]
+
+set_property -dict { PACKAGE_PIN U2   IOSTANDARD LVCMOS33 } [get_ports { o_anode[0] }]
+set_property -dict { PACKAGE_PIN U4   IOSTANDARD LVCMOS33 } [get_ports { o_anode[1] }]
+set_property -dict { PACKAGE_PIN V4   IOSTANDARD LVCMOS33 } [get_ports { o_anode[2] }]
+set_property -dict { PACKAGE_PIN W4   IOSTANDARD LVCMOS33 } [get_ports { o_anode[3] }]
+
 set_property CONFIG_VOLTAGE 3.3 [current_design]
 set_property CFGBVS VCCO [current_design]
+
+
+

@@ -48,7 +48,7 @@ module swervolf_nexys_a7
     output wire        o_uart_tx,
     input wire [15:0]  i_sw,
     output reg [15:0]  o_led,
-    output reg [7:0]   o_anode,
+    output reg [3:0]   o_anode,
     output reg [7:0]   o_cathode);
 
    wire [63:0] 	       gpio_out;
@@ -57,8 +57,8 @@ module swervolf_nexys_a7
    reg [15:0] 	       sw_r;
    reg [15:0] 	       sw_2r;
 
-   wire [7:0]          anode_out;
-   reg [7:0]           anode_int_r;
+   wire [3:0]          anode_out;
+   reg [3:0]           anode_int_r;
 
    wire [7:0]          cathode_out;
    reg [7:0]           cathode_int_r;
