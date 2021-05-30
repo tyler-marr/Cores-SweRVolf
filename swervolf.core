@@ -65,7 +65,6 @@ filesets:
       - rtl/clk_gen_basys3.v : {file_type : verilogSource}
       - rtl/bscan_tap.sv    : {file_type : systemVerilogSource}
       - rtl/swervolf_basys3.v    : {file_type : systemVerilogSource}
-      - tb/ssd_tb.v : {file_type : verilogSource}
     depend: [">=chipsalliance.org:cores:SweRV_EL2:1.3"]
 
 

@@ -55,27 +55,33 @@ typedef struct  {
 typedef struct {
 	//DLAB = 1 specfic registers are only avaliable when (line_con&(1<<8) == 1)
 	//DLAB should be 0 when not interacting with those registers
-	union {
-		struct {
-			union { //is both recieve and transmit depending on read/write
-				const uint8_t rx;	//don't write this
-				uint8_t tx;			//don't read from this
-			};
-			uint8_t int_enable;
-		};
-		uint16_t divisor_latch;		//DLAB = 1 specfic 
+	union { //is both recieve and transmit depending on read/write
+		const uint8_t rx;				//don't write this
+		uint8_t tx;						//don't read from this
+		uint8_t divisor_latch_LS_byte;	//DLAB = 1 specfic 
 	};
+	uint8_t first_Gap[3];
+	union {
+		uint8_t int_enable;
+		uint8_t divisor_latch_MS_byte;	//DLAB = 1 specfic 
+	};
+	uint8_t second_Gap[3];
 	union {
 		const uint8_t int_status;
 		uint8_t FIFO_con;
 	};
+	uint8_t third_Gap[3];
 	uint8_t line_con;
+	uint8_t forth_Gap[3];
 	uint8_t modm_con;
+	uint8_t fith_Gap[3];
 	union {
 		const uint8_t line_status;
 		uint8_t prescaler_div;		//DLAB = 1 specfic 
 	};
+	uint8_t sixth_Gap[3];
 	const uint8_t modm_status;
+	uint8_t seventh_Gap[3];
 	uint8_t scratch_pad;			//extra byte 
 } __attribute__((packed)) UART_con_t; 
 
