@@ -59,30 +59,32 @@ typedef struct {
 		const uint8_t rx;				//don't write this
 		uint8_t tx;						//don't read from this
 		uint8_t divisor_latch_LS_byte;	//DLAB = 1 specfic 
-	};
-	uint8_t first_Gap[3];
+	}; uint32_t : 24;
+
 	union {
 		uint8_t int_enable;
 		uint8_t divisor_latch_MS_byte;	//DLAB = 1 specfic 
-	};
-	uint8_t second_Gap[3];
+	}; uint32_t : 24;
+
 	union {
 		const uint8_t int_status;
 		uint8_t FIFO_con;
-	};
-	uint8_t third_Gap[3];
-	uint8_t line_con;
-	uint8_t forth_Gap[3];
-	uint8_t modm_con;
-	uint8_t fith_Gap[3];
+	}; uint32_t : 24;
+
+
+	uint8_t line_con; uint32_t : 24;
+
+	uint8_t modm_con; uint32_t : 24;
+
 	union {
 		const uint8_t line_status;
 		uint8_t prescaler_div;		//DLAB = 1 specfic 
-	};
-	uint8_t sixth_Gap[3];
-	const uint8_t modm_status;
-	uint8_t seventh_Gap[3];
+	}; uint32_t : 24;
+
+	const uint8_t modm_status; uint32_t : 24;
+
 	uint8_t scratch_pad;			//extra byte 
+	uint32_t : 24;
 } __attribute__((packed)) UART_con_t; 
 
 
@@ -93,7 +95,7 @@ typedef struct  {
 		uint8_t ssd_values[4];
 		uint32_t single_reg;
 	};
-} __attribute__((packed)) SSD_con_t; 
+} __attribute__((packed)) SSD_con_t;
 
 
 
